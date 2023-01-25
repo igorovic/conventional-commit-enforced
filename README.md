@@ -14,7 +14,7 @@ pnpm commitizen init @commitlint/cz-commitlint --pnpm --save-dev --save-exact
 
 ### configure git hooks with husky
 
-**.husky/comon.sh**
+**.husky/common.sh**
 
 ```sh
 #!/usr/bin/env sh
@@ -44,7 +44,7 @@ esac
 exec < /dev/tty && node_modules/.bin/cz --hook || true
 ```
 
-**.husky/commit-msng**
+**.husky/commit-msg**
 
 ```sh
 #!/usr/bin/env sh
