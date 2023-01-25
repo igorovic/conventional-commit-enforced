@@ -14,63 +14,58 @@ pnpm commitizen init @commitlint/cz-commitlint --pnpm --save-dev --save-exact
 
 ### configure git hooks with husky
 
-**with powershell**
+**.husky/comon.sh**
 
-```powershell
-@'
+```sh
+#!/usr/bin/env sh
 command_exists () {
   command -v "$1" >/dev/null 2>&1
 }
-
 # Workaround for Windows 10, Git Bash and Yarn
 # to avoid errors when using /dev/tty in hooks
 if command_exists winpty && test -t 1; then
   exec < /dev/tty
 fi
-'@ | pnpm husky add .husky/common.sh
 ```
+
+**.husky/prepare-commit-msg**
+
+```sh
+#!/usr/bin/env sh
+# // https://github.com/commitizen/cz-cli/issues/627
+
+case `uname` in
+    *CYGWIN*|*MINGW*|*MSYS*)
+        exit 0
+    exit 1;;
+esac
+. "$(dirname "$0")/_/husky.sh"
+. "$(dirname -- "$0")/common.sh"
+exec < /dev/tty && node_modules/.bin/cz --hook || true
+```
+
+**.husky/commit-msng**
+
+```sh
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npx commitlint --edit
+```
+
+#### set hook code in one command
 
 ```powershell
 @'
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-. "$(dirname -- "$0")/common.sh"
-
-# `CI` env variable should exists in most CI/CD environments
-if [[ -z "${CI}" ]]; then
-  # only run in non CI environments - e.g: dev machine
-  exec < /dev/tty && node_modules/.bin/cz --hook || true
-fi
-'@ | pnpm husky add .husky/prepare-commit-msg.sh
+__FILE_CONTENT__
+'@ | pnpm husky add .husky/__GIT_HOOK_NAME__
 ```
 
 **with bash**
 
 ```bash
-cat <<EOF | pnpm husky add .husky/common.sh
-command_exists () {
-  command -v "\$1" >/dev/null 2>&1
-}
-
-# Workaround for Windows 10, Git Bash and Yarn
-# to avoid errors when using /dev/tty in hooks
-if command_exists winpty && test -t 1; then
-  exec < /dev/tty
-fi
-EOF
-```
-
-```bash
-cat <<EOF | pnpm husky add .husky/prepare-commit-msg.sh
-#!/usr/bin/env sh
-. "\$(dirname -- "\$0")/_/husky.sh"
-. "\$(dirname -- "\$0")/common.sh"
-
-# `CI` env variable should exists in most CI/CD environments
-if [[ -z "\${CI}" ]]; then
-  # only run in non CI environments - e.g: dev machine
-  exec < /dev/tty && node_modules/.bin/cz --hook || true
-fi
+cat <<EOF | pnpm husky add .husky/__GIT_HOOK_NAME__
+__FILE_CONTENT__
 EOF
 ```
 
@@ -81,9 +76,16 @@ EOF
 ## Relevant config files
 
 - `.husky/common.sh`
-- `.husky/prepare-commit-msg.sh`
+- `.husky/prepare-commit-msg`
+- `.husky/commit-msg`
 - `commitlint.config.js`
 - `package.json` -> `config.commitizen.path`
+
+## Result
+
+- You can still use `git` to create a commit. But after submitting your commit message `commitlint` kicks in and prevents commiting unconventional message.
+  - If you commit from vscode you get the same behavior.
+- If you are on MacOS or Linux it will start commitizen interactive prompt
 
 ## Test it
 
