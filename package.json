@@ -1,0 +1,29 @@
+{
+  "name": "conventional-commit-enforced",
+  "version": "1.0.0",
+  "description": "example repo with enforced conventional commits",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "conventional",
+    "commits",
+    "commitlint",
+    "commitizen"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
+    "@commitlint/cz-commitlint": "^17.4.2",
+    "commitizen": "^4.3.0",
+    "husky": "^8.0.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/@commitlint/cz-commitlint"
+    }
+  }
+}
