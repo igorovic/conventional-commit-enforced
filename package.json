@@ -4,6 +4,7 @@
   "description": "example repo with enforced conventional commits",
   "main": "index.js",
   "scripts": {
+    "commit": "git cz",
     "prepare": "husky install"
   },
   "keywords": [
@@ -19,12 +20,11 @@
     "@commitlint/config-conventional": "^17.4.2",
     "@commitlint/cz-commitlint": "^17.4.2",
     "commitizen": "^4.3.0",
-    "cz-conventional-changelog": "^3.3.0",
     "husky": "^8.0.3"
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "@commitlint/cz-commitlint"
     }
   }
 }
