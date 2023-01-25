@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
-. "$(dirname -- "$0")/_/common.sh"
+. "$(dirname -- "$0")/common.sh"
 
 # `CI` env variable should exists in most CI/CD environments
 if [[ -z "${CI}" ]]; then
