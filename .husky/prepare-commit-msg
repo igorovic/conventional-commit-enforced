@@ -1,11 +1,10 @@
 #!/usr/bin/env sh
 # // https://github.com/commitizen/cz-cli/issues/627
-
+. "$(dirname -- "$0")/_/husky.sh"
 case `uname` in
     (*CYGWIN*|*MINGW*|*MSYS*)
+        . "$(dirname -- "$0")/common.sh"
         exit 0
     exit 1;;
 esac
-. "$(dirname -- "$0")/_/husky.sh"
-. "$(dirname -- "$0")/common.sh"
 exec < /dev/tty && node_modules/.bin/cz --hook || true

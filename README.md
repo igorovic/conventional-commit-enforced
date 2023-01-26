@@ -35,7 +35,7 @@ fi
 # // https://github.com/commitizen/cz-cli/issues/627
 
 case `uname` in
-    *CYGWIN*|*MINGW*|*MSYS*)
+    (*CYGWIN*|*MINGW*|*MSYS*)
         exit 0
     exit 1;;
 esac
