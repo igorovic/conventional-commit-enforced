@@ -3,8 +3,9 @@
 case `uname` in
     (*CYGWIN*|*MINGW*|*MSYS*)
         # fallback for Windows users.
-        . "$(dirname -- "$0")/_/husky.sh"
-        npx commitlint --edit 
+        
+        echo "$1"
+       echo " I ran this"
     exit 1;;
 esac
-
+echo "I am here"

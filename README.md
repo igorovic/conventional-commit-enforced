@@ -39,7 +39,7 @@ case `uname` in
         exit 0
     exit 1;;
 esac
-. "$(dirname "$0")/_/husky.sh"
+. "$(dirname -- "$0")/_/husky.sh"
 . "$(dirname -- "$0")/common.sh"
 exec < /dev/tty && node_modules/.bin/cz --hook || true
 ```
