@@ -69,6 +69,16 @@ __FILE_CONTENT__
 EOF
 ```
 
+### Make hooks executables
+
+- ! This step is required for Mac OS and Linux users
+
+```bash
+chmod +x .husky/common.sh
+chmod +x .husky/prepare-commit-msg
+chmod +x .husky/commit-msg
+```
+
 ### Optional - install VScode commitizen extension
 
 - [commitizen](https://marketplace.visualstudio.com/items?itemName=KnisterPeter.vscode-commitizen)
