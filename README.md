@@ -32,15 +32,13 @@ fi
 
 ```sh
 #!/usr/bin/env sh
-# // https://github.com/commitizen/cz-cli/issues/627
-
-case `uname` in
-    (*CYGWIN*|*MINGW*|*MSYS*)
-        exit 0
-    exit 1;;
-esac
 . "$(dirname -- "$0")/_/husky.sh"
-. "$(dirname -- "$0")/common.sh"
+case `uname` in
+    *CYGWIN*|*MINGW*|*MSYS*)
+        . "$(dirname -- "$0")/common.sh"
+        exit 0
+    ;;
+esac
 exec < /dev/tty && node_modules/.bin/cz --hook || true
 ```
 
@@ -48,9 +46,13 @@ exec < /dev/tty && node_modules/.bin/cz --hook || true
 
 ```sh
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-npx commitlint --edit
+. "$(dirname -- "$0")/common.sh"
+case `uname` in
+    *CYGWIN*|*MINGW*|*MSYS*)
+        npx commitlint --edit
+        exit 0
+    exit 1;;
+esac
 ```
 
 #### set hook code in one command

@@ -6,8 +6,5 @@ case `uname` in
         . "$(dirname -- "$0")/common.sh"
         exit 0
     ;;
-    *)    
-        exec < /dev/tty && node_modules/.bin/cz --hook || true
-    ;;
 esac
-
+exec < /dev/tty && node_modules/.bin/cz --hook || true
